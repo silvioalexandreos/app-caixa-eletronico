@@ -1,0 +1,112 @@
+<!--<app-titulo [titulo]="'Cliente'"></app-titulo> -->
+
+<div class="row">
+
+  <div class="col-sm-6" *ngIf="clienteSelecionado">
+    <div class="row">
+      <div class="mr-auto">
+        <app-titulo [titulo]="'Cód. Cliente: ' + clienteSelecionado.id"></app-titulo>
+      </div>
+      <div class="mt-1">
+        <button class="btn btn-sm btn-outline-danger" (click)="voltar()">
+          Fechar
+        </button>
+      </div>
+    </div>
+
+    <form [formGroup]="clienteForm">
+      <div class="form-group">
+        <label for="formGroupExampleInput">Data Cadastro</label>
+        <input type="date" formControlName="dataCadastro" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Status</label>
+        <input type="text" formControlName="status" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Tipo</label>
+        <input type="text" formControlName="tipo" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Conta</label>
+        <input type="text" formControlName="conta" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Nome</label>
+        <input type="text" formControlName="nome" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">CPF</label>
+        <input type="text" formControlName="cpf"  class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Nome Fantasia</label>
+        <input type="text" formControlName="nomeFantasia"  class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">CNPJ</label>
+        <input type="text" formControlName="cnpj"  class="form-control">
+      </div>
+      <div class="form-group">
+        <hr>
+        <button class="btn btn-success" (click)="saveCliente()" [disabled]="!clienteForm.valid">Enviar</button>
+      </div>
+    </form>
+  </div>
+
+  <div [ngClass]="{'col-sm-6': clienteSelecionado, 'col-sm-12': !clienteSelecionado}">
+    <app-titulo [titulo]="titulo"></app-titulo>
+
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Visualizar</th>
+          <th scope="col">ID</th>
+          <th scope="col">Data Cadastro</th>
+          <th scope="col">Status</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Conta</th>
+          <th scope="col">Nome</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Nome Fantasia</th>
+          <th scope="col">CNPJ</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td><button (click)="clienteSelect(cliente)"
+            class="text-dark btn btn-sm btn-outline-warning">Detalhe</button></td>
+          <td scope="row">{{cliente.id}}</td>
+          <td>{{cliente.dataCadastro}}</td>
+          <td>{{cliente.status}}</td>
+          <td>{{cliente.tipo}}</td>
+          <td>{{cliente.conta}}</td>
+          <td>{{cliente.nome}}</td>
+          <td>{{cliente.cpf}}</td>
+          <td>{{cliente.nomeFantasia}}</td>
+          <td>{{cliente.cnpj}}</td>
+          <td>
+            <div class="btn-group">
+              <button (click)="openModal(template, cliente.id)" class="btn btn-sm btn-outline-primary">Transações</button>
+              <button class="btn btn-sm btn-outline-danger">Desativar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<ng-template #template>
+  <div class="modal-body">
+   <!-- <app-professores-alunos (closeModal)="closeModal()" [professores]="profsAlunos"></app-professores-alunos> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pull-right" aria-label="Close"
+      (click)="modalRef.hide()">
+      FECHAR
+    </button>
+  </div>
+</ng-template>
